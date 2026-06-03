@@ -265,6 +265,30 @@
     }
     .lightbox-close:hover { background: rgba(255,255,255,0.22); }
 
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.12);
+      border: none;
+      color: #fff;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      font-size: 28px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+      transition: background 0.2s;
+      z-index: 10;
+      line-height: 1;
+    }
+    .lightbox-nav:hover { background: rgba(255,255,255,0.25); }
+    .lightbox-nav.left  { left: 16px; }
+    .lightbox-nav.right { right: 16px; }
+
     /* ── FOOTER ── */
     .footer {
       text-align: center;
@@ -465,7 +489,9 @@
 <!-- ── LIGHTBOX ── -->
 <div class="lightbox" id="lightbox" onclick="closeLightboxOnBg(event)">
   <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button class="lightbox-nav left" onclick="changeImage(-1)">&#8249;</button>
   <img class="lightbox-img" id="lightbox-img" src="" alt="Screenshot"/>
+  <button class="lightbox-nav right" onclick="changeImage(1)">&#8250;</button>
 </div>
 
 <!-- ── TERMS & CONDITIONS DIALOG ── -->
@@ -494,11 +520,22 @@
 
 <script>
   /* ── Lightbox ── */
+  const thumbs = document.querySelectorAll('.screenshot-thumb');
+  let currentIndex = 0;
+  
   function openLightbox(el) {
-    const src = el.getAttribute('data-src');
-    document.getElementById('lightbox-img').src = src;
+    thumbs.forEach((t, i) => { if (t === el) currentIndex = i; });
+    showImage(currentIndex);
     document.getElementById('lightbox').classList.add('active');
     document.body.style.overflow = 'hidden';
+  }
+  function showImage(index) {
+    const src = thumbs[index].getAttribute('data-src');
+    document.getElementById('lightbox-img').src = src;
+  }
+  function changeImage(dir) {
+    currentIndex = (currentIndex + dir + thumbs.length) % thumbs.length;
+    showImage(currentIndex);
   }
   function closeLightbox() {
     document.getElementById('lightbox').classList.remove('active');
