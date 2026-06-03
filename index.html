@@ -114,10 +114,12 @@
     /* ── STATS (no card) ── */
     .stats-row {
       display: flex;
-      justify-content: space-around;
+      justify-content: center;
+      align-items: center;
+      gap: 32px;
       padding: 4px 0 28px;
     }
-    .stat { text-align: center; }
+        .stat { text-align: center; }
     .stat-value {
       font-family: 'Exo 2', sans-serif;
       font-size: 22px;
@@ -132,8 +134,8 @@
     .stat-label { font-size: 12px; color: var(--gray); margin-top: 3px; }
     .stat-divider {
       width: 1px;
+      height: 36px;
       background: rgba(255,255,255,0.15);
-      align-self: stretch;
     }
 
     /* ── SECTION TITLE ── */
